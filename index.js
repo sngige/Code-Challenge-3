@@ -1,153 +1,106 @@
-// Base API URL
+// API URL - Using JSON Server
 const API_URL = 'http://localhost:3000/posts';
 
 // DOM Elements
-const postList = document.getElementById('post-list');
+const postListContainer = document.getElementById('post-list-container');
 const postDetail = document.getElementById('post-detail');
 const newPostForm = document.getElementById('new-post-form');
-const editPostForm = document.getElementById('edit-post-form');
-const editForm = document.getElementById('edit-form');
-const cancelEditBtn = document.getElementById('cancel-edit');
 
-// Current post being edited
-let currentEditPostId = null;
+// Load posts when page loads
+document.addEventListener('DOMContentLoaded', loadPosts);
 
-// Main function that runs when DOM loads
-function main() {
-    displayPosts();
-    addNewPostListener();
-    addEditPostListener();
-    addCancelEditListener();
-}
-
-// Display all posts
-async function displayPosts() {
+// Function to load all posts
+async function loadPosts() {
     try {
         const response = await fetch(API_URL);
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch posts');
+        }
+        
         const posts = await response.json();
         
-        postList.innerHTML = '';
+        postListContainer.innerHTML = '';
+        
+        if (posts.length === 0) {
+            postListContainer.innerHTML = '<p>No posts yet. Add your first post!</p>';
+            postDetail.innerHTML = '<p>No posts available</p>';
+            return;
+        }
+        
         posts.forEach(post => {
             const postElement = document.createElement('div');
             postElement.className = 'post-item';
-            postElement.innerHTML = `<strong>${post.title}</strong>`;
-            postElement.dataset.id = post.id;
-            
-            postElement.addEventListener('click', () => handlePostClick(post.id));
-            postList.appendChild(postElement);
+            postElement.innerHTML = `<strong>${post.title}</strong> - ${post.author}`;
+            postElement.addEventListener('click', () => showPostDetails(post.id));
+            postListContainer.appendChild(postElement);
         });
-
+        
         // Show first post by default
-        if (posts.length > 0) {
-            handlePostClick(posts[0].id);
-        }
+        showPostDetails(posts[0].id);
     } catch (error) {
-        console.error('Error fetching posts:', error);
-        postList.innerHTML = '<p>Error loading posts. Please try again.</p>';
+        console.error('Error loading posts:', error);
+        postListContainer.innerHTML = '<p>Error loading posts. Please try again.</p>';
+        postDetail.innerHTML = '<p>Error loading post details</p>';
     }
 }
 
-// Handle post click to show details
-async function handlePostClick(postId) {
+// Function to show post details
+async function showPostDetails(postId) {
     try {
         const response = await fetch(`${API_URL}/${postId}`);
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch post details');
+        }
+        
         const post = await response.json();
         
         postDetail.innerHTML = `
             <h3>${post.title}</h3>
-            <p>By: ${post.author}</p>
+            <p><em>By: ${post.author}</em></p>
             <div class="post-content">${post.content}</div>
-            <button id="edit-post-btn">Edit</button>
-            <button id="delete-post-btn">Delete</button>
+            <button onclick="deletePost(${post.id})">Delete Post</button>
         `;
-        
-        // Add event listeners for edit and delete buttons
-        document.getElementById('edit-post-btn').addEventListener('click', () => showEditForm(post));
-        document.getElementById('delete-post-btn').addEventListener('click', () => deletePost(post.id));
     } catch (error) {
-        console.error('Error fetching post details:', error);
-        postDetail.innerHTML = '<p>Error loading post details.</p>';
+        console.error('Error loading post details:', error);
+        postDetail.innerHTML = '<p>Error loading post details. Please try again.</p>';
     }
 }
 
-// Show edit form with post data
-function showEditForm(post) {
-    currentEditPostId = post.id;
-    document.getElementById('edit-title').value = post.title;
-    document.getElementById('edit-content').value = post.content;
-    editPostForm.classList.remove('hidden');
-}
-
-// Add listener for new post form
-function addNewPostListener() {
-    newPostForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
+// Function to add new post
+newPostForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const newPost = {
+        title: document.getElementById('post-title').value,
+        content: document.getElementById('post-content').value,
+        author: document.getElementById('post-author').value
+    };
+    
+    try {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newPost)
+        });
         
-        const newPost = {
-            title: document.getElementById('new-title').value,
-            content: document.getElementById('new-content').value,
-            author: document.getElementById('new-author').value
-        };
-        
-        try {
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(newPost)
-            });
-            
-            if (response.ok) {
-                newPostForm.reset();
-                displayPosts();
-            }
-        } catch (error) {
-            console.error('Error creating post:', error);
-            alert('Error creating post. Please try again.');
+        if (!response.ok) {
+            throw new Error('Failed to add post');
         }
-    });
-}
-
-// Add listener for edit post form
-function addEditPostListener() {
-    editForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
         
-        const updatedPost = {
-            title: document.getElementById('edit-title').value,
-            content: document.getElementById('edit-content').value
-        };
-        
-        try {
-            const response = await fetch(`${API_URL}/${currentEditPostId}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(updatedPost)
-            });
-            
-            if (response.ok) {
-                editPostForm.classList.add('hidden');
-                displayPosts();
-                handlePostClick(currentEditPostId);
-            }
-        } catch (error) {
-            console.error('Error updating post:', error);
-            alert('Error updating post. Please try again.');
-        }
-    });
-}
+        // Clear form and reload posts
+        newPostForm.reset();
+        loadPosts();
+    } catch (error) {
+        console.error('Error adding post:', error);
+        alert('Error adding post. Please try again.');
+    }
+});
 
-// Add listener for cancel edit button
-function addCancelEditListener() {
-    cancelEditBtn.addEventListener('click', () => {
-        editPostForm.classList.add('hidden');
-    });
-}
-
-// Delete a post
+// Function to delete post
 async function deletePost(postId) {
     if (confirm('Are you sure you want to delete this post?')) {
         try {
@@ -155,17 +108,15 @@ async function deletePost(postId) {
                 method: 'DELETE'
             });
             
-            if (response.ok) {
-                displayPosts();
-                postDetail.innerHTML = '<p>Select a post to view details</p>';
-                editPostForm.classList.add('hidden');
+            if (!response.ok) {
+                throw new Error('Failed to delete post');
             }
+            
+            loadPosts();
+            postDetail.innerHTML = '<p>Select a post to view details</p>';
         } catch (error) {
             console.error('Error deleting post:', error);
             alert('Error deleting post. Please try again.');
         }
     }
 }
-
-// Initialize the app when DOM is loaded
-document.addEventListener('DOMContentLoaded', main);
