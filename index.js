@@ -1,5 +1,5 @@
 // API URL - Using JSON Server {const API_URL = 'http://localhost:3000/posts';}
-const API_URL = 'https://your-json-server.typicode.com/sngige/Code-Challenge-3.git/posts';
+const API_URL = 'https://my-json-server.typicode.com/sngige/Code-Challenge-3/posts';
 
 // DOM Elements
 const postListContainer = document.getElementById('post-list-container');
