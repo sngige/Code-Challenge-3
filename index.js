@@ -1,5 +1,5 @@
-// API URL - Using JSON Server
-const API_URL = 'http://localhost:3000/posts';
+// API URL - Using JSON Server {const API_URL = 'http://localhost:3000/posts';}
+const API_URL = 'https://your-json-server.typicode.com/your-github-username/your-repo-name/posts';
 
 // DOM Elements
 const postListContainer = document.getElementById('post-list-container');
