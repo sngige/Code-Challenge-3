@@ -19,10 +19,12 @@ A basic blog management application that allows you to create, view, and delete 
 
 ## Setup Instructions
 
-1. Make sure you have Node.js installed on your computer
+1. Make sure you have Node.js and npm installed on your computer
 2. Clone or download this repository
 3. Navigate to the project folder in your terminal
-4. Start the JSON Server
+4. Start the JSON Server by running npm install -g json-server
+5. Run npm fund
+6. Run json-server --watch db.json --port 3000
 5. Open the `index.html` file in your web browser
 
 ## How to Use
