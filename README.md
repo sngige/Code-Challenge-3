@@ -33,3 +33,20 @@ A basic blog management application that allows you to create, view, and delete 
 2. Click on any post to view its details in the right panel
 3. Use the form at the bottom to add new posts
 4. Click the "Delete Post" button to remove a post
+
+## API Endpoints
+The app uses these REST endpoints:
+1. GET /posts - Get all posts
+2. GET /posts/:id - Get a single post
+3. POST /posts - Create a new post
+4. DELETE /posts/:id - Delete a post
+
+## project structure
+simple-blog-manager/
+index.html         # Main HTML file
+styles.css         # CSS styles
+index.js           # Main JavaScript file
+db.json            # Database file for JSON Server
+README.md          # This file
+
+
