@@ -1,24 +1,17 @@
 {
-  "name": "code-challenge3-blog",
+  "name": "code-challenge-3",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sngige/Code-Challenge-3.git"
+    "start": "node index.js",
+    "build": "echo 'Build complete'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/sngige/Code-Challenge-3/issues"
-  },
-  "homepage": "https://github.com/sngige/Code-Challenge-3#readme",
-  "dependencies": {
-    "express": "^5.1.0"
-  },
-  "description": "",
-  "type": "commonjs"
+  "dependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }
