@@ -1,17 +1,26 @@
 {
-  "name": "code-challenge-3",
+  "name": "blog-post",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is a simple web application that lets you create, view, edit, and delete blog posts. It is built using HTML, CSS, and JavaScript, making it easy to manage blog content in a clean interface.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "build": "echo 'Build complete'"
+    "start": "json-server --host 0.0.0.0 --watch db.json --port 3000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OLIVER-LOMANAT/Blog-post.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {},
-  "engines": {
-    "node": ">=18.0.0"
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/OLIVER-LOMANAT/Blog-post/issues"
+  },
+  "homepage": "https://github.com/OLIVER-LOMANAT/Blog-post#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "json-server": "^0.17.3"
   }
 }
