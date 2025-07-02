@@ -1,5 +1,6 @@
 // API URL - Using JSON Server
-const API_URL = '/posts'; 
+
+const API_URL = 'https://code-challenge-3-4y8l.onrender.com/'
 
 // DOM Elements
 const postListContainer = document.getElementById('post-list-container');
