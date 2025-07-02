@@ -2,25 +2,12 @@
   "name": "Code-Challenge-3",
   "version": "1.0.0",
   "description": "A basic blog management application that allows you to create, view, and delete blog posts.",
-  "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "json-server --watch db.json --port 3000"
+    "start": "json-server --watch db.json --port 3000"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sngige/Code-Challenge-3.git"
-  },
-  "keywords": ["blog", "json-server", "express", "node", "frontend"],
-  "author": "",
+  "keywords": ["blog", "json-server"],
   "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/sngige/Code-Challenge-3/issues"
-  },
-  "homepage": "https://github.com/sngige/Code-Challenge-3#readme",
   "dependencies": {
-    "express": "^4.18.2",
     "json-server": "^0.17.3"
   }
 }
