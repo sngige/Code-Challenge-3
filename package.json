@@ -1,12 +1,16 @@
 {
-  "name": "Code-Challenge-3",
+  "name": "code-challenge-3",
   "version": "1.0.0",
   "description": "A basic blog management application that allows you to create, view, and delete blog posts.",
   "scripts": {
-    "start": "json-server --watch db.json --port 3000"
+    "start": "json-server --host 0.0.0.0 --watch db.json --port $PORT"
   },
   "keywords": ["blog", "json-server"],
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sngige/Code-Challenge-3.git"
+  },
   "dependencies": {
     "json-server": "^0.17.3"
   }
