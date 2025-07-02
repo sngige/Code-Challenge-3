@@ -1,6 +1,6 @@
 // API URL - Using JSON Server
 
-const API_URL = 'https://code-challenge-3-4y8l.onrender.com/posts'
+const API_URL = 'https://code-challenge-3-1-ytfh.onrender.com/posts';
 
 // DOM Elements
 const postListContainer = document.getElementById('post-list-container');
@@ -61,7 +61,7 @@ async function showPostDetails(postId) {
             <h3>${post.title}</h3>
             <p><em>By: ${post.author}</em></p>
             <div class="post-content">${post.content}</div>
-            <button onclick="deletePost(${post.id})">Delete Post</button>
+            <button onclick="deletePost('${post.id}')">Delete Post</button>
         `;
     } catch (error) {
         console.error('Error loading post details:', error);
